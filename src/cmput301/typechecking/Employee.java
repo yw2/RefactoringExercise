@@ -1,39 +1,62 @@
 package cmput301.typechecking;
 
 public class Employee {
-	private int type;
-	
-	static final int ENGINEER = 0;
-	static final int SALESMAN = 1;
-	static final int MANAGER = 2;
+	private Type type = new Engineer();
+
+	public static final int ENGINEER = 0;
+	public static final int SALESMAN = 1;
+	public static final int MANAGER = 2;
 	
 	private int monthlySalary;
 	private int commision;
 	private int bonus;
 	
 	public Employee(int aType){
-		this.type = aType;
+		this.setType(aType);
 	}
 
 	public int getType(){
-		return type;
+		return type.getType();
 	}
 	
 	public void setType(int arg){
-		type = arg;
+		switch (arg)
+		{
+			case ENGINEER:
+				this.type = new Engineer();
+				break;
+			case SALESMAN:
+				this.type = new Salesman();
+				break;
+			case MANAGER:
+				this.type = new Manager();
+				break;
+			default:
+				this.type = null;
+				break;
+		}
 	}
 	
 	public int payAmount(){
-		switch(getType()){
-		case ENGINEER:
-			return monthlySalary;
-		case SALESMAN:
-			return monthlySalary + commision;
-		case MANAGER:
-			return monthlySalary + bonus;
-		default:
-			throw new RuntimeException("Incorrect Employee");
-		}
+		return type.payAmount(this);
+	}
+
+	public int getMonthlySalary()
+	{
+
+		return monthlySalary;
+	}
+
+	public int getCommision()
+	{
+
+		return commision;
+	}
+
+	public int getBonus()
+	{
+
+		return bonus;
 	}
 
 }
